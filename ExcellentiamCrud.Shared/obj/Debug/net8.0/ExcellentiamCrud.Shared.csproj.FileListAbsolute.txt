@@ -1,0 +1,11 @@
+C:\Users\jhona\OneDrive\Documentos\C#\ExcellentiamSolution\ExcellentiamCrud.Shared\bin\Debug\net8.0\ExcellentiamCrud.Shared.deps.json
+C:\Users\jhona\OneDrive\Documentos\C#\ExcellentiamSolution\ExcellentiamCrud.Shared\bin\Debug\net8.0\ExcellentiamCrud.Shared.dll
+C:\Users\jhona\OneDrive\Documentos\C#\ExcellentiamSolution\ExcellentiamCrud.Shared\bin\Debug\net8.0\ExcellentiamCrud.Shared.pdb
+C:\Users\jhona\OneDrive\Documentos\C#\ExcellentiamSolution\ExcellentiamCrud.Shared\obj\Debug\net8.0\ExcellentiamCrud.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jhona\OneDrive\Documentos\C#\ExcellentiamSolution\ExcellentiamCrud.Shared\obj\Debug\net8.0\ExcellentiamCrud.Shared.AssemblyInfoInputs.cache
+C:\Users\jhona\OneDrive\Documentos\C#\ExcellentiamSolution\ExcellentiamCrud.Shared\obj\Debug\net8.0\ExcellentiamCrud.Shared.AssemblyInfo.cs
+C:\Users\jhona\OneDrive\Documentos\C#\ExcellentiamSolution\ExcellentiamCrud.Shared\obj\Debug\net8.0\ExcellentiamCrud.Shared.csproj.CoreCompileInputs.cache
+C:\Users\jhona\OneDrive\Documentos\C#\ExcellentiamSolution\ExcellentiamCrud.Shared\obj\Debug\net8.0\ExcellentiamCrud.Shared.dll
+C:\Users\jhona\OneDrive\Documentos\C#\ExcellentiamSolution\ExcellentiamCrud.Shared\obj\Debug\net8.0\refint\ExcellentiamCrud.Shared.dll
+C:\Users\jhona\OneDrive\Documentos\C#\ExcellentiamSolution\ExcellentiamCrud.Shared\obj\Debug\net8.0\ExcellentiamCrud.Shared.pdb
+C:\Users\jhona\OneDrive\Documentos\C#\ExcellentiamSolution\ExcellentiamCrud.Shared\obj\Debug\net8.0\ref\ExcellentiamCrud.Shared.dll

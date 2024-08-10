@@ -1,0 +1,130 @@
+﻿@page "/cursos"
+
+@using ExcellentiamCrud.Shared;
+@using CurrieTechnologies.Razor.SweetAlert2;
+@using ExcellentiamCrud.Client.Services;
+
+@inject SweetAlertService Swal;
+@inject ICursoService cursoService;
+@inject IJSRuntime JS;
+
+<h3>Cursos</h3>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<a class="btn btn-success btn-sm mb-3" href="curso">Nuevo Curso</a>
+
+<button class="btn btn-primary btn-sm mb-3" @onclick="DescargarCursosExcel">
+    Descargar Cursos en Excel
+</button>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre del curso</th>
+            <th>Descripcion</th>
+            <th>Fecha de inicio</th>
+            <th>Fecha de fin</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (listaCursos == null)
+        {
+
+            <tr>
+                <td colspan="5" align="center">
+                    <img style="width:50px" src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" />
+                </td>
+            </tr>
+        }
+        else
+        {
+            @foreach(var item in listaCursos)
+            {
+                <tr>
+                    <td>@item.NombreCurso</td>
+                    <td>@item.Descripcion</td>
+                    <td>@item.FechaInicio.ToString("dd/MM/yyyy")</td>
+                    <td>@item.FechaFin.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="/curso/@item.CursoId">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <button type="button" class="btn btn-danger btn-sm ms-2" @onclick="(() => Eliminar(item.CursoId))">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                        <button type="button" class="btn btn-info btn-sm ms-2" @onclick="(() => DescargarEstudiantesExcel(item.CursoId))">
+                            <i class="bi bi-download"></i>
+                        </button>
+
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>
+
+@code {
+    List<CursoDTO>? listaCursos = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        listaCursos = await cursoService.getCursos("");
+
+    }
+
+    private async Task Eliminar(int id)
+    {
+        var resultado = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Eliminar curso",
+                Text = "Deseas eliminar el curso?",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true
+
+            });
+
+        if (resultado.IsConfirmed)
+        {
+            var eliminado = await cursoService.EliminarCurso(id);
+
+            if (eliminado != null)
+                listaCursos = listaCursos!.FindAll(c => c.CursoId != id);
+        }
+    }
+
+    private async Task DescargarCursosExcel()
+    {
+        try
+        {
+            var fileBytes = await cursoService.DescargarCursosExcel();
+
+            var base64String = Convert.ToBase64String(fileBytes);
+            var fileName = "Cursos.xlsx";
+            var dataUrl = $"data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{base64String}";
+            await JS.InvokeVoidAsync("open", dataUrl, fileName);
+        }
+        catch (Exception ex)
+        {
+            await Swal.FireAsync("Error", $"No se pudo descargar el archivo: {ex.Message}", SweetAlertIcon.Error);
+        }
+    }
+
+    private async Task DescargarEstudiantesExcel(int cursoId)
+    {
+        try
+        {
+            var fileBytes = await cursoService.DescargarEstudiantesExcel(cursoId);
+
+            var base64String = Convert.ToBase64String(fileBytes);
+            var fileName = "Estudiantes.xlsx";
+            var dataUrl = $"data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{base64String}";
+            await JS.InvokeVoidAsync("open", dataUrl, fileName);
+        }
+        catch (Exception ex)
+        {
+            await Swal.FireAsync("Error", $"No se pudo descargar el archivo: {ex.Message}", SweetAlertIcon.Error);
+        }
+    }
+}

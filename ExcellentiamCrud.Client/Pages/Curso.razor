@@ -1,0 +1,87 @@
+﻿@page "/curso"
+@page "/curso/{idCursoEditar:int}"
+
+@using ExcellentiamCrud.Shared;
+@using ExcellentiamCrud.Client.Services;
+
+@inject ICursoService cursoService;
+@inject NavigationManager navegacion;
+
+<h3>@titulo</h3>
+
+<EditForm Model="curso" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <div class="mb-3">
+        <label class="form-label">Nombre curso</label>
+        <InputText class="form-control" @bind-Value="curso.NombreCurso"></InputText>
+        <ValidationMessage For="@(() => curso.NombreCurso)"></ValidationMessage>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Descripción</label>
+        <InputText class="form-control" @bind-Value="curso.Descripcion"></InputText>
+        <ValidationMessage For="@(() => curso.Descripcion)"></ValidationMessage>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Fecha de inicio</label>
+        <InputDate class="form-control" @bind-Value="curso.FechaInicio"></InputDate>
+        <ValidationMessage For="@(() => curso.FechaInicio)"></ValidationMessage>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Fecha de fin</label>
+        <InputDate class="form-control" @bind-Value="curso.FechaFin"></InputDate>
+        <ValidationMessage For="@(() => curso.FechaFin)"></ValidationMessage>
+    </div>
+
+    <button class="btn btn-primary" type="submit">
+        @btnTexto
+    </button>
+
+    <a class="btn btn-warning" href="cursos">Volver</a>
+</EditForm>
+
+
+@code {
+    [Parameter]
+    public int idCursoEditar { get; set; } = 0;
+
+    string titulo = string.Empty;
+    string btnTexto = string.Empty;
+
+    CursoDTO curso = new CursoDTO();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if(idCursoEditar > 0)
+        {
+            curso = await cursoService.ObtenerCursoPorId(idCursoEditar);
+            btnTexto = "Actualizar curso";
+            titulo = "Editar curso";
+        }
+        else
+        {
+            curso.FechaInicio = DateTime.Today;
+            curso.FechaFin = DateTime.Today;
+            btnTexto = "Guardar Curso";
+            titulo = "Nuevo Curso";
+        }
+    }
+
+    private async Task OnValidSubmit()
+    {
+        string resultado;
+        if (idCursoEditar == 0)
+        {
+            resultado = await cursoService.GuardarCurso(curso);
+        }
+        else
+        {
+            resultado = await cursoService.ActualizarCurso(curso);
+        }
+
+        if (!string.IsNullOrEmpty(resultado))
+        {
+            navegacion.NavigateTo("/cursos");
+        }
+
+    }
+}

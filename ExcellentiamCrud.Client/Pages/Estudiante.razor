@@ -1,0 +1,110 @@
+﻿@page "/estudiante"
+@page "/estudiante/{idEstudianteEditar:int}"
+
+@using ExcellentiamCrud.Shared;
+@using ExcellentiamCrud.Client.Services;
+
+@inject IEstudianteService estudianteService;
+@inject ICursoService cursoService;
+@inject NavigationManager navegacion;
+
+<h3>@titulo</h3>
+
+<EditForm Model="estudiante" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+
+    <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        <InputText class="form-control" @bind-Value="estudiante.Nombre"></InputText>
+        <ValidationMessage For="@(() => estudiante.Nombre)"></ValidationMessage>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Apellido</label>
+        <InputText class="form-control" @bind-Value="estudiante.Apellido"></InputText>
+        <ValidationMessage For="@(() => estudiante.Apellido)"></ValidationMessage>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Fecha de Nacimiento</label>
+        <InputDate class="form-control" @bind-Value="estudiante.FechaNacimiento"></InputDate>
+        <ValidationMessage For="@(() => estudiante.FechaNacimiento)"></ValidationMessage>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Correo Electronico</label>
+        <InputText class="form-control" @bind-Value="estudiante.CorreoElectronico"></InputText>
+        <ValidationMessage For="@(() => estudiante.CorreoElectronico)"></ValidationMessage>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Telefono</label>
+        <InputText class="form-control" @bind-Value="estudiante.Telefono"></InputText>
+        <ValidationMessage For="@(() => estudiante.Telefono)"></ValidationMessage>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Direccion</label>
+        <InputText class="form-control" @bind-Value="estudiante.Direccion"></InputText>
+        <ValidationMessage For="@(() => estudiante.Direccion)"></ValidationMessage>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Curso</label>
+        <InputSelect class="form-select" @bind-Value="estudiante.CursoId">
+            <option value="0">-- Seleccionar --</option>
+            @foreach (var item in listaCurso)
+            {
+                <option value="@item.CursoId">@item.NombreCurso</option>
+            }
+        </InputSelect>
+        <ValidationMessage For="@(() => estudiante.CursoId)"></ValidationMessage>
+    </div>
+
+    <button class="btn btn-primary" type="submit">
+        @btnTexto
+    </button>
+
+    <a class="btn btn-warning" href="estudiantes">Volver</a>
+
+</EditForm>
+
+@code {
+    [Parameter]
+    public int idEstudianteEditar { get; set; } = 0;
+
+    string titulo = string.Empty;
+    string btnTexto = string.Empty;
+
+    EstudianteDTO estudiante = new EstudianteDTO();
+    List<CursoDTO> listaCurso = new List<CursoDTO>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (idEstudianteEditar > 0)
+        {
+            estudiante = await estudianteService.ObtenerEstudiantePorId(idEstudianteEditar);
+            btnTexto = "Actualizar Estudiante";
+            titulo = "Editar Estudiante";
+        }
+        else
+        {
+            estudiante.FechaNacimiento = DateTime.Today;
+            estudiante.FechaRegistro = DateTime.Today;
+            btnTexto = "Guardar Estudiante";
+            titulo = "Nuevo Estudiante";
+        }
+        listaCurso = await cursoService.getCursos("");
+    }
+
+    private async Task OnValidSubmit()
+    {
+        string resultado;
+        if (idEstudianteEditar == 0)
+            resultado = await estudianteService.AgregarEstudiante(estudiante);
+        else
+            resultado = await estudianteService.ActualizarEstudiante(estudiante);
+
+
+        if (!string.IsNullOrEmpty(resultado))
+        {
+            navegacion.NavigateTo("/estudiantes");
+        }
+
+    }
+
+}

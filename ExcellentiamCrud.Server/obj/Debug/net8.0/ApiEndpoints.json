@@ -1,0 +1,188 @@
+[
+  {
+    "ContainingType": "ExcellentiamCrud.Server.Controllers.CursoController",
+    "Method": "ActualizarCurso",
+    "RelativePath": "api/curso/actualizarCurso",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cursoDto",
+        "Type": "ExcellentiamCrud.Shared.CursoDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ExcellentiamCrud.Server.Controllers.CursoController",
+    "Method": "GuardarCurso",
+    "RelativePath": "api/curso/agregarCurso",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cursoDto",
+        "Type": "ExcellentiamCrud.Shared.CursoDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ExcellentiamCrud.Server.Controllers.CursoController",
+    "Method": "DescargarCursosExcel",
+    "RelativePath": "api/curso/descargar-cursos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ExcellentiamCrud.Server.Controllers.CursoController",
+    "Method": "EliminarCurso",
+    "RelativePath": "api/curso/eliminarCurso/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ExcellentiamCrud.Server.Controllers.CursoController",
+    "Method": "ObtenerCursoPorId",
+    "RelativePath": "api/curso/getCurso/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ExcellentiamCrud.Server.Controllers.CursoController",
+    "Method": "ObtenerCursos",
+    "RelativePath": "api/curso/getCursos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nombrePatron",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ExcellentiamCrud.Server.Controllers.EstudianteController",
+    "Method": "ActualizarEstudiante",
+    "RelativePath": "api/estudiante/actualizarEstudiante",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "estudianteDto",
+        "Type": "ExcellentiamCrud.Shared.EstudianteDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ExcellentiamCrud.Server.Controllers.EstudianteController",
+    "Method": "AgregarEstudiante",
+    "RelativePath": "api/estudiante/agregarEstudiante",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "estudianteDto",
+        "Type": "ExcellentiamCrud.Shared.EstudianteDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ExcellentiamCrud.Server.Controllers.EstudianteController",
+    "Method": "DescargarEstudiantesExcel",
+    "RelativePath": "api/estudiante/descargar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cursoId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ExcellentiamCrud.Server.Controllers.EstudianteController",
+    "Method": "EliminarEstudiante",
+    "RelativePath": "api/estudiante/eliminarEstudiante/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ExcellentiamCrud.Server.Controllers.EstudianteController",
+    "Method": "ObtenerEstudiantePorId",
+    "RelativePath": "api/estudiante/getEstudiante/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ExcellentiamCrud.Server.Controllers.EstudianteController",
+    "Method": "ObtenerEstudiantes",
+    "RelativePath": "api/estudiante/getEstudiantes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nombrePatron",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

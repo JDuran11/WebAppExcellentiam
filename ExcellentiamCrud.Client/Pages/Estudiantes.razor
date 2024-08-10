@@ -1,0 +1,100 @@
+﻿@page "/estudiantes"
+
+@using ExcellentiamCrud.Shared;
+@using CurrieTechnologies.Razor.SweetAlert2;
+@using ExcellentiamCrud.Client.Services;
+
+@inject SweetAlertService Swal;
+@inject IEstudianteService estudianteService;
+
+<h3>Estudiantes</h3>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<a class="btn btn-success btn-sm mb-3" href="estudiante">Nuevo estudiante</a>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Correo Electronico</th>
+            <th>Telefono</th>
+            <th>Direccion</th>
+            <th>FechaRegistro</th>
+            <th>Activo</th>
+            <th>Curso</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (listaEstudiantes == null)
+        {
+
+            <tr>
+                <td colspan="5" align="center">
+                    <img style="width:50px" src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" />
+                </td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in listaEstudiantes)
+            {
+                <tr>
+                    <td>@item.Nombre</td>
+                    <td>@item.Apellido</td>
+                    <td>@item.FechaNacimiento.ToString("dd/MM/yyyy")</td>
+                    <td>@item.CorreoElectronico</td>
+                    <td>@item.Telefono</td>
+                    <td>@item.Direccion</td>
+                    <td>@item.FechaRegistro?.ToString("dd/MM/yyyy")</td>
+                    <td>@(item.Activo.HasValue ? (item.Activo.Value ? "Sí" : "No") : "No Disponible")</td>
+                    <td>@item.Curso!.NombreCurso</td>
+                    <td></td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="/estudiante/@item.EstudianteId">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <button type="button" class="btn btn-danger btn-sm ms-2" @onclick="(() => Eliminar(item.EstudianteId))">
+                            <i class="bi bi-trash"></i>
+                        </button>
+
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>
+
+@code {
+    List<EstudianteDTO>? listaEstudiantes = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        listaEstudiantes = await estudianteService.getEstudiantes("");
+    }
+
+    private async Task Eliminar(int id)
+    {
+        var resultado = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Eliminar estudiante",
+                Text = "Deseas eliminar el estudiante?",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true
+            });
+
+        if (resultado.IsConfirmed)
+        {
+            var eliminado = await estudianteService.EliminarEstudiante(id);
+
+            if (eliminado != null)
+                listaEstudiantes = listaEstudiantes!.FindAll(e => e.EstudianteId != id);
+        }
+
+    }
+}
